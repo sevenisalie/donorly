@@ -2,10 +2,38 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
+import { BsArrowDownCircleFill } from "react-icons/bs"
+import {useSession, signIn, signOut} from "next-auth/react"
+import Link from 'next/link'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+  const {data:session, status} = useSession()
+  let loginButton = (
+    <button
+    onClick={() => signIn('google')}
+    className='font-body  text-slate-600 text-md font-bold h-full w-auto px-3 py-1 rounded-2xl bg-indigo-200 hover:bg-indigo-700 hover:text-slate-50'>
+      Sign In
+    </button>
+  )
+  if (status==="authenticated") {
+    loginButton = (    
+      <button
+      onClick={() => signOut()}
+      className='font-body  text-slate-600 text-md font-bold h-full w-auto px-3 py-1 rounded-2xl bg-indigo-200 hover:bg-indigo-700 hover:text-slate-50'>
+        Sign Out
+      </button>)
+  }
+  if (status==="loading") {
+    loginButton = (
+      <button
+      onClick={() => signIn('google')}
+      className='font-body  text-slate-600 text-md font-bold h-full w-auto px-3 py-1 rounded-2xl bg-indigo-200 hover:bg-indigo-700 hover:text-slate-50'>
+        Loading
+      </button>
+    )
+  }
   return (
     <>
       <Head>
@@ -14,109 +42,33 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
+      <main className="relative flex-col justify-content-start w-screen h-auto min-h-screen bg-slate-50">
+                  {/* //navbar */}
+        <div className="flex-row w-full h-auto px-3 py-1  min-h-min">
+          <div className="flex h-full w-2/3 place-self-center ml-auto  p-2 rounded-full items-center justify-around">
+              <Link className="font-body text-md text-slate-400 font-bold hover:text-slate-800" href="/dashboard">Pricing</Link>
+              <Link className='font-body text-md text-slate-400 font-bold hover:text-slate-800' href="#">Signup</Link>
+              {
+                  loginButton
+                }
           </div>
         </div>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
+        <hr className='w-4/5 font-semibold ml-auto mr-auto border-t-4'/>
+
+        {/* hero */}
+        <div className='relative mt-10 text-center flex-col w-full h-auto justify-center content-star'>
+          <h1 className='font-header text-slate-800 font-superbold text-7xl'>Donorly.</h1>
+          <h2 className='font-body mt-7 text-slate-600 font-bold text-lg'>Managing donors is a breeze with donorly. Browse 1M+ fundraising leads in the app.</h2>
+          <div className='flex place-content-end mr-8 relative top-3'>
+          <button className='font-body mt-4 text-slate-600 text-md font-extrabold h-full w-auto px-3 py-1.5 rounded-2xl bg-indigo-200 hover:bg-indigo-700 hover:text-slate-50'>Launch App</button>
+          </div>
+          <img className='w-2/3 h-auto mt-6 ml-auto mr-auto' src={"/HANDSMOCKUP.png"}></img>
+          <div className='relative bottom-5 left-4'>
+          <BsArrowDownCircleFill style={{color: "rgb(67 56 202)", fontSize:"1.95em"}}/>
           </div>
         </div>
 
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
       </main>
     </>
   )
