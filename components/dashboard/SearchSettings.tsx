@@ -28,7 +28,7 @@ export default function SearchSettings<Props>(props:Props) {
 
         <button 
         onClick={isOpenHandler}
-        className='font-body text-lg text-slate-50 bg-blue-400 rounded-full mt-10 mb-auto py-2 px-4 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none'>
+        className='font-body text-lg text-slate-50 bg-blue-500 rounded-full mt-10 mb-auto py-2 px-4 hover:bg-slate-200 focus:bg-slate-200 focus:outline-none'>
           Save
         </button>
       </div> 
